@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class Registration extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $datas;
+    public $attachment;
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($datas, $attachment)
+    {
+        $this->datas = $datas;
+        $this->attachment = $attachment;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mails.registration')
+        ->subject('ФОРМА РЕГИТСРАЦИИ С EDU.KZ')
+        ->attachFromStorage($this->attachment);
+    }
+}
